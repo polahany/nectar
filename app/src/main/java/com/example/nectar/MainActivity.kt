@@ -64,12 +64,10 @@ class MainActivity : ComponentActivity() {
                 if (showSplash) {
                     NectarSplashScreen()
                 } else {
-                    Scaffold( modifier = Modifier.fillMaxSize() ) { innerPadding ->
                         Greeting(
                             name = "Android",
-                            modifier = Modifier.padding(innerPadding)
+                            modifier = Modifier.padding()
                         )
-                    }
                 }
             }
         }

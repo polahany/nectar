@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <style name="Theme.Nectar" parent="android:Theme.Material.Light.NoActionBar" />
-    <style name="Theme.NectarSplashScreen" parent="Theme.SplashScreen" >
+    <style name="Theme.NectarSplashScreen" parent="android:Theme.Material.Light.NoActionBar" >
         <item name="windowSplashScreenBackground">
             @android:color/transparent
         </item>
@@ -10,3 +10,4 @@
         </item>
     </style>
 </resources>
+
