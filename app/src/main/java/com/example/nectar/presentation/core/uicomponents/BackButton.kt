@@ -1,9 +1,7 @@
-package com.example.nectar.presentation.core
+package com.example.nectar.core.uicomponents
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -14,11 +12,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.nectar.ui.theme.Shapes
 import com.example.nectar.ui.theme.Typography
-import com.example.nectar.ui.theme.mainGreen
+import com.example.nectar.ui.theme.mainBlack
 
 
 @Composable
-fun BigButton(
+fun BackButton(
     text: String ,
     onClick: () -> Unit ,
     modifier: Modifier = Modifier
@@ -27,8 +25,8 @@ fun BigButton(
         onClick = onClick ,
         shape = Shapes.medium,
         colors = ButtonDefaults.buttonColors(
-            containerColor = mainGreen,
-            contentColor = Color.White
+            containerColor = Color.White,
+            contentColor = mainBlack
         ),
         modifier = Modifier
             .size(width = 352.dp , height = 68.dp)
@@ -44,8 +42,8 @@ fun BigButton(
 
 @Preview
 @Composable
-fun BigButtonPreview(modifier: Modifier = Modifier) {
-    BigButton(
+fun BackButtonPreview(modifier: Modifier = Modifier) {
+    BackButton(
         text = "Get Started" ,
         onClick = {} ,
     )
