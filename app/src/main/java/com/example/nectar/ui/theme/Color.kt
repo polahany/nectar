@@ -18,7 +18,7 @@ val onBoardingSmallSlogun = Color(252, 252, 252,179)
 
 val HomeScreenLocation = Color(76, 79, 77)
 
-val searchBar = Color(242, 243, 242)
+val searchBar = Color(222, 223, 222)
 
 val secondaryText = Color(124, 124, 124)
 
