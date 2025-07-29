@@ -13,9 +13,9 @@ import com.example.nectar.domain.model.Product
 
 @Composable
 fun ProductFullVerticalList(
-    items: List<Product> ,
-    onAddClick: () -> Unit ,
-    onCardClick: () -> Unit ,
+    items: List<Product>,
+    onAddClick: () -> Unit,
+    onCardClick: (Product) -> Unit,
     modifier: Modifier = Modifier
 ) {
     LazyVerticalGrid(

@@ -29,6 +29,9 @@ import com.example.nectar.presentation.core.uicomponents.ProductFullVerticalList
 import com.example.nectar.ui.theme.Typography
 import com.example.nectar.ui.theme.mainBlack
 
+
+
+
 @Composable
 fun CategoryScreen(
     category: String ,

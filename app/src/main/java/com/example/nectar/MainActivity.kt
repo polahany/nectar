@@ -14,8 +14,7 @@ import androidx.lifecycle.lifecycleScope
 import com.example.nectar.data.database.AppDatabase
 import com.example.nectar.data.database.prepopulateData
 import com.example.nectar.data.mockdata.mockitem
-import com.example.nectar.presentation.mainpagescreen.MainPage
-import com.example.nectar.presentation.customsplashscreen.NectarSplashScreen
+import com.example.nectar.presentation.SplashScreen.NectarSplashScreen
 import com.example.nectar.presentation.productdetailscreen.ProductDetailScreen
 import com.example.nectar.ui.theme.NectarTheme
 import kotlinx.coroutines.Dispatchers
@@ -45,25 +44,10 @@ class MainActivity : ComponentActivity() {
         }
 
         enableEdgeToEdge()
-
         installSplashScreen()
-
         setContent {
             NectarTheme {
-                var showSplash by remember { mutableStateOf(true) }
-
-                LaunchedEffect(Unit) {
-                    delay(2000)
-                    showSplash = false
-                }
-
-                if (showSplash) {
-                    NectarSplashScreen()
-                } else {
-                    ProductDetailScreen(
-                        product = mockitem
-                    )
-                }
+                NectarApp()
             }
         }
     }

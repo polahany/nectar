@@ -47,14 +47,14 @@ import com.example.nectar.data.mockdata.mockitem
 
 @Composable
 fun DetailsContent(
-    product: Product,
+    product: Product?,
     onMinusClick: () -> Unit,
     onAddClick: () -> Unit,
     onExpandDetails: () -> Unit,
     onExpandNutrition: () -> Unit,
     onExpandReview: () -> Unit,
-    onReview: () -> Unit ,
-    onButtonClick : () -> Unit ,
+    onReview: () -> Unit,
+    onButtonClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -64,48 +64,51 @@ fun DetailsContent(
             .background(Color.White)
             .padding(24.dp)
     ) {
-        Column (
-            modifier = Modifier
-                .fillMaxWidth()
-        ){
-            Spacer(Modifier.height(8.dp))
+        product?.let {
 
-            NameAndDetailsRow(product = product)
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+            ) {
+                Spacer(Modifier.height(8.dp))
 
-            Spacer(Modifier.height(32.dp))
+                NameAndDetailsRow(product = product)
 
-            CartButtonsAndPriceRow(product = product)
+                Spacer(Modifier.height(32.dp))
 
-            Spacer(Modifier.height(32.dp))
+                CartButtonsAndPriceRow(product = product)
 
-            ExpandableList(
-                title = "Product Details" ,
-                product = product ,
-                type = "product description"
-            )
+                Spacer(Modifier.height(16.dp))
 
-            Spacer(Modifier.height(20.dp))
+                ExpandableList(
+                    title = "Product Details",
+                    product = product,
+                    type = "product description"
+                )
 
-            ExpandableList(
-                title = "Nutritions" ,
-                product = product ,
-                type = "nutritions"
-            )
+                Spacer(Modifier.height(20.dp))
 
-            Spacer(Modifier.height(20.dp))
+                ExpandableList(
+                    title = "Nutritions",
+                    product = product,
+                    type = "nutritions"
+                )
 
-            ExpandableList(
-                title = "Review" ,
-                product = product ,
-                type = "review"
-            )
+                Spacer(Modifier.height(20.dp))
 
-            Spacer(Modifier.height(16.dp))
+                ExpandableList(
+                    title = "Review",
+                    product = product,
+                    type = "review"
+                )
 
-            BigButton(
-                text = "Add To Basket" ,
-                onClick = onButtonClick
-            )
+                Spacer(Modifier.height(16.dp))
+
+                BigButton(
+                    text = "Add To Basket",
+                    onClick = onButtonClick
+                )
+            }
         }
     }
 }

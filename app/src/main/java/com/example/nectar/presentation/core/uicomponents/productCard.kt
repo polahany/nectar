@@ -27,7 +27,7 @@ import com.example.nectar.ui.theme.secondaryText
 @Composable
 fun ProductCard(
     product: Product,
-    onCardClick: () -> Unit,
+    onCardClick: (Product) -> Unit,
     onAddClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -40,7 +40,7 @@ fun ProductCard(
                 shape = RoundedCornerShape(18.dp)
             )
             .clip(RoundedCornerShape(18.dp))
-            .clickable { onCardClick() }
+            .clickable { onCardClick(product) }
             .shadow(
                 elevation = 0.dp,
                 shape = RoundedCornerShape(18.dp),

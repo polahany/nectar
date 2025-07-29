@@ -23,11 +23,20 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.nectar.R
 import com.example.nectar.core.uicomponents.BigButton
+import com.example.nectar.presentation.navigation.NavigationDestination
 import com.example.nectar.ui.theme.Typography
 import com.example.nectar.ui.theme.onBoardingSmallSlogun
 
+object OnBoardingDestination : NavigationDestination{
+    override val route = "onboarding"
+    override val title = route
+}
+
 @Composable
-fun OnBoardingScreen(modifier: Modifier = Modifier) {
+fun OnBoardingScreen(
+    onButtonClicked : () -> Unit ,
+    modifier: Modifier = Modifier
+) {
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -37,13 +46,18 @@ fun OnBoardingScreen(modifier: Modifier = Modifier) {
             contentDescription = "onboard background",
             contentScale = ContentScale.Crop
         )
-        OnBoardingFrame()
+        OnBoardingFrame(
+            onButtonClicked = onButtonClicked
+        )
     }
 }
 
 
 @Composable
-fun OnBoardingFrame(modifier: Modifier = Modifier) {
+fun OnBoardingFrame(
+    onButtonClicked : () -> Unit ,
+    modifier: Modifier = Modifier
+) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -60,13 +74,18 @@ fun OnBoardingFrame(modifier: Modifier = Modifier) {
                 .fillMaxWidth()
                 .padding(30.dp)
         ){
-            OnBoardingContent()
+            OnBoardingContent(
+                onButtonClicked = onButtonClicked
+            )
         }
     }
 }
 
 @Composable
-fun OnBoardingContent(modifier: Modifier = Modifier) {
+fun OnBoardingContent(
+    onButtonClicked : () -> Unit ,
+    modifier: Modifier = Modifier
+) {
     Image(
         painter = painterResource(R.drawable.splashlogo) ,
         contentDescription = "logo on onboarding" ,
@@ -91,7 +110,7 @@ fun OnBoardingContent(modifier: Modifier = Modifier) {
     Spacer(Modifier.height(40.dp))
     BigButton(
         text = "Get started" ,
-        onClick = {} ,
+        onClick = onButtonClicked,
     )
 }
 
@@ -100,5 +119,5 @@ fun OnBoardingContent(modifier: Modifier = Modifier) {
 @Preview
 @Composable
 fun OnBoardingScreenPreview(modifier: Modifier = Modifier) {
-    OnBoardingScreen()
+    OnBoardingScreen({})
 }

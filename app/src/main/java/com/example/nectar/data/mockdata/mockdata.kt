@@ -7,6 +7,7 @@ import kotlin.collections.List
 
 val exclusiveOffers = listOf(
     Product(
+        id= 1 ,
         name = "Natural Red Apple",
         detail = "1kg, Price",
         image_url = "https://img.freepik.com/premium-photo/red-apple-with-white-background-shadow-it_14117-4740.jpg",
@@ -17,6 +18,7 @@ val exclusiveOffers = listOf(
         review = 5
     ),
     Product(
+        id= 2 ,
         name = "Sunflower Oil",
         detail = "1L, Price",
         image_url = "https://purepng.com/public/uploads/large/purepng.com-sunflower-oilsunflower-oilcooking-oilfrying-oilnon-volatile-oil-1411529833165ctzjx.png",
@@ -27,6 +29,7 @@ val exclusiveOffers = listOf(
         review = 4
     ),
     Product(
+        id= 3 ,
         name = "Whole Wheat Bread",
         detail = "400g, Price",
         image_url = "https://cdn.pixabay.com/photo/2015/09/16/20/20/bread-941869_1280.jpg",
@@ -37,6 +40,7 @@ val exclusiveOffers = listOf(
         review = 4
     ),
     Product(
+        id= 4 ,
         name = "Almond Milk",
         detail = "1L, Price",
         image_url = "https://cdn.pixabay.com/photo/2017/05/12/08/29/almond-2306523_1280.jpg",
@@ -47,6 +51,7 @@ val exclusiveOffers = listOf(
         review = 5
     ),
     Product(
+        id= 5 ,
         name = "Fresh Strawberries",
         detail = "500g, Price",
         image_url = "https://cdn.pixabay.com/photo/2017/07/31/11/21/strawberries-2553099_1280.jpg",
@@ -60,6 +65,7 @@ val exclusiveOffers = listOf(
 
 val bestSelling = listOf(
     Product(
+        id= 6 ,
         name = "Salmon Fillet",
         detail = "300g, Price",
         image_url = "https://cdn.pixabay.com/photo/2021/05/25/11/43/fish-6282216_1280.jpg",
@@ -70,6 +76,7 @@ val bestSelling = listOf(
         review = 5
     ),
     Product(
+        id= 7 ,
         name = "Organic Banana",
         detail = "1kg, Price",
         image_url = "https://upload.wikimedia.org/wikipedia/commons/8/8a/Banana-Single.jpg",
@@ -80,6 +87,7 @@ val bestSelling = listOf(
         review = 4
     ),
     Product(
+        id= 8 ,
         name = "Avocado",
         detail = "1pc, Price",
         image_url = "https://cdn.pixabay.com/photo/2017/07/16/10/43/avocado-2501342_1280.jpg",
@@ -90,6 +98,7 @@ val bestSelling = listOf(
         review = 5
     ),
     Product(
+        id= 9 ,
         name = "Brown Eggs",
         detail = "12pcs, Price",
         image_url = "https://cdn.pixabay.com/photo/2016/03/05/19/02/eggs-1239249_1280.jpg",
@@ -100,6 +109,7 @@ val bestSelling = listOf(
         review = 4
     ),
     Product(
+        id= 10 ,
         name = "Broccoli",
         detail = "1kg, Price",
         image_url = "https://cdn.pixabay.com/photo/2018/04/12/11/38/broccoli-3312974_1280.jpg",
