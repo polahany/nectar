@@ -1,6 +1,7 @@
 package com.example.nectar.core.uicomponents
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -17,13 +18,18 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.compose.rememberNavController
 import com.example.nectar.R
+import com.example.nectar.presentation.mainpagescreen.MainDestination
 import com.example.nectar.ui.theme.mainBlack
 import com.example.nectar.ui.theme.mainGreen
 
 
 val screens = listOf(
-    "main" ,
+    MainDestination.route ,
     "explore" ,
     "cart"
 )
@@ -35,10 +41,16 @@ val icons = listOf(
     R.drawable.cartsvg ,
 )
 @Composable
-fun NavigationBar(modifier: Modifier = Modifier) {
+fun NavigationBar(
+    navController: NavHostController,
+    modifier: Modifier = Modifier
+) {
+    val currentBackStackEntry = navController.currentBackStackEntryAsState()
+    val currentRoute = currentBackStackEntry.value?.destination?.route
+
     Row(
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.SpaceAround ,
+        horizontalArrangement = Arrangement.SpaceAround,
         modifier = modifier
             .height(92.dp)
             .fillMaxWidth()
@@ -46,20 +58,29 @@ fun NavigationBar(modifier: Modifier = Modifier) {
             .clip(RoundedCornerShape(topStart = 15.dp, topEnd = 15.dp))
             .background(Color.White)
     ) {
-        repeat(screens.size){
-            page ->
+        screens.forEachIndexed { index, screen ->
             NavigationIcon(
-                isSelected = currentScreen == screens[page] ,
-                icon = icons[page]
+                isSelected = currentRoute == screen,
+                icon = icons[index],
+                onClick = {
+                    if (currentRoute != screen) {
+                        navController.navigate(screen) {
+                            popUpTo(MainDestination.route) { inclusive = false }
+                            launchSingleTop = true
+                        }
+                    }
+                }
             )
         }
     }
 }
 
+
 @Composable
 fun NavigationIcon(
     isSelected: Boolean,
-    icon: Int ,
+    icon: Int,
+    onClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Icon(
@@ -68,6 +89,7 @@ fun NavigationIcon(
         tint = if (isSelected) mainGreen else mainBlack,
         modifier = modifier
             .size(32.dp)
+            .clickable { onClick() }
     )
 }
 
@@ -75,5 +97,6 @@ fun NavigationIcon(
 @Preview
 @Composable
 fun NavigationBarPreview(modifier: Modifier = Modifier) {
-    NavigationBar()
+    val navController = rememberNavController()
+    NavigationBar(navController)
 }

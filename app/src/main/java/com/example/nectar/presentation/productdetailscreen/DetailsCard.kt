@@ -20,7 +20,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -36,9 +35,9 @@ import com.example.nectar.ui.theme.mainBlack
 
 @Composable
 fun DetailsCard(
-    product: Product ,
-    onBack: () -> Unit ,
-    onDownload: () -> Unit ,
+    product: Product?,
+    onBack: () -> Unit,
+    onDownload: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -50,20 +49,22 @@ fun DetailsCard(
             .background(itemBackGround)
             .padding(top = 56.dp) ,
     ) {
-        DetailsCardButtons(
-            onDownload = onDownload ,
-            onBack = onBack
-        )
-        Spacer(Modifier.height(28.dp))
-        AsyncImage(
-            model = ImageRequest.Builder(LocalContext.current)
-                .data(product.image_url)
-                .crossfade(true)
-                .build(),
-            contentDescription = product.name,
-            contentScale = ContentScale.Crop,
-            modifier = Modifier.size(328.dp, 200.dp)
-        )
+        product?.let {
+            DetailsCardButtons(
+                onDownload = onDownload ,
+                onBack = onBack
+            )
+            Spacer(Modifier.height(28.dp))
+            AsyncImage(
+                model = ImageRequest.Builder(LocalContext.current)
+                    .data(product.image_url)
+                    .crossfade(true)
+                    .build(),
+                contentDescription = product.name,
+                contentScale = ContentScale.Crop,
+                modifier = Modifier.size(328.dp, 200.dp)
+            )
+        }
     }
 }
 

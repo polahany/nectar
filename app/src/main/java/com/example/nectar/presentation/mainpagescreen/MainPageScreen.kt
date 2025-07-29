@@ -9,24 +9,45 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
+import com.example.nectar.core.uicomponents.NavigationBar
 import com.example.nectar.core.uicomponents.ProductsList
 import com.example.nectar.core.uicomponents.SearchBar
 import com.example.nectar.data.mockdata.mocklists
+import com.example.nectar.domain.model.Product
+import com.example.nectar.presentation.navigation.NavigationDestination
 
 
-@Composable
-fun MainPage(modifier: Modifier = Modifier) {
-    MainPageContent()
+object MainDestination : NavigationDestination{
+    override val route  = "mainscreen"
+    override val title = route
 }
 
 @Composable
-fun MainPageContent(modifier: Modifier = Modifier) {
+fun MainPage(
+    onCardClick: (Product) -> Unit,
+    modifier: Modifier = Modifier
+) {
+    MainPageContent(
+        onCardClick = onCardClick,
+        modifier = modifier
+    )
+}
+
+
+@Composable
+fun MainPageContent(
+    onCardClick : (Product) -> Unit,
+    modifier: Modifier = Modifier
+) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -58,7 +79,8 @@ fun MainPageContent(modifier: Modifier = Modifier) {
                     name = title ,
                     type = title ,
                     items = items,
-                    onClick = {}
+                    onCardClick = onCardClick ,
+                    onClick = {} ,
                 )
             }
         }
@@ -71,5 +93,5 @@ fun MainPageContent(modifier: Modifier = Modifier) {
 @Preview
 @Composable
 fun MainPagePreview(modifier: Modifier = Modifier) {
-    MainPage()
+    MainPage({}  )
 }

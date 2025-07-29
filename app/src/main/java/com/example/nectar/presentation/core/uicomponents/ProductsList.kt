@@ -25,10 +25,11 @@ import com.example.nectar.ui.theme.mainGreen
 
 @Composable
 fun ProductsList(
-    name: String ,
-    type: String ,
-    items: List<Product> ,
-    onClick: () -> Unit ,
+    name: String,
+    type: String,
+    items: List<Product>,
+    onClick: () -> Unit,
+    onCardClick: (Product) -> Unit,
     modifier: Modifier = Modifier)
 {
     Column (
@@ -45,7 +46,8 @@ fun ProductsList(
         )
         Spacer(Modifier.height(20.dp))
         ItemsRow(
-            items = items
+            items = items ,
+            onCardClick = onCardClick ,
         )
     }
 }
@@ -83,6 +85,7 @@ fun ListTitleBar(
 @Composable
 fun ItemsRow(
     items : List<Product>,
+    onCardClick: (Product) -> Unit,
     modifier: Modifier = Modifier
 ) {
     LazyRow(
@@ -93,7 +96,7 @@ fun ItemsRow(
             item ->
             ProductCard(
                 product = item ,
-                onCardClick = {} ,
+                onCardClick = { onCardClick(item) },
                 onAddClick = {} ,
                 )
         }
@@ -107,6 +110,7 @@ fun ProductListPreview(modifier: Modifier = Modifier) {
         name = "Exclusive Offers",
         type = "exclusive",
         onClick = {},
+        onCardClick = {},
         items = listOf(
             Product(
                 name = "Natural Red Apple",

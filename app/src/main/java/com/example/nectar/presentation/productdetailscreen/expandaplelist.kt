@@ -121,7 +121,7 @@ fun ReviewStars(
 ) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.SpaceBetween ,
+        horizontalArrangement = Arrangement.spacedBy(2.dp) ,
         modifier = Modifier
             .width(92.dp)
     ) {
@@ -130,7 +130,7 @@ fun ReviewStars(
                 imageVector = Icons.Default.Star,
                 contentDescription = "Star ${index + 1}",
                 tint = if (index < review) stars else secondaryText,
-                modifier = Modifier.size(14.dp)
+                modifier = Modifier.size(16.dp)
             )
         }
     }

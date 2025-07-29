@@ -22,9 +22,16 @@ import androidx.compose.ui.unit.sp
 import com.example.nectar.R
 import com.example.nectar.core.uicomponents.SearchBar
 import com.example.nectar.presentation.core.uicomponents.CategoryCard
+import com.example.nectar.presentation.navigation.NavigationDestination
 import com.example.nectar.ui.theme.Typography
 import com.example.nectar.ui.theme.categoryColorsBodyAndBoarder
 import com.example.nectar.ui.theme.mainBlack
+
+
+object FindDestination : NavigationDestination{
+    override val route = "explore"
+    override val title = route
+}
 
 
 val categories = listOf(
