@@ -30,7 +30,7 @@ val exuclusivesOffer = Color(3, 3, 3)
 
 val mainBlack = Color(24, 23, 37)
 
-val itemBackGround = Color(242, 243, 242)
+val itemBackGround =Color(222, 223, 222)
 
 val theMinusSign = Color(179, 179, 179)
 
@@ -52,7 +52,7 @@ val categoriesWithOnlyBody = listOf<Color>(
     mainGreen
 )
 
-val categoryColorsBodyOnBoarder = listOf<Pair<Color , Color>>(
+val categoryColorsBodyAndBoarder = listOf<Pair<Color , Color>>(
     Color(83, 177, 117, 26) to Color(83, 177, 117, 179),     // 0.1 and 0.7 alpha
     Color(248, 164, 76, 26) to Color(248, 164, 76, 179),
     Color(247, 165, 147, 64) to Color(247, 165, 147, 255),
