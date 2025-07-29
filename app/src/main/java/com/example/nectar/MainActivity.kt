@@ -13,8 +13,10 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.lifecycleScope
 import com.example.nectar.data.database.AppDatabase
 import com.example.nectar.data.database.prepopulateData
+import com.example.nectar.data.mockdata.mockitem
 import com.example.nectar.presentation.mainpagescreen.MainPage
 import com.example.nectar.presentation.customsplashscreen.NectarSplashScreen
+import com.example.nectar.presentation.productdetailscreen.ProductDetailScreen
 import com.example.nectar.ui.theme.NectarTheme
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -58,7 +60,9 @@ class MainActivity : ComponentActivity() {
                 if (showSplash) {
                     NectarSplashScreen()
                 } else {
-                    MainPage()
+                    ProductDetailScreen(
+                        product = mockitem
+                    )
                 }
             }
         }
