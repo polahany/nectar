@@ -5,32 +5,20 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
+import com.example.nectar.data.dao.CartDao
 import com.example.nectar.data.dao.ProductDao
+import com.example.nectar.domain.model.CartItem
 import com.example.nectar.domain.model.Product
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-@Database(entities = [Product::class], version = 1)
+@Database(entities = [CartItem::class, Product::class], version = 3)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun productDao(): ProductDao
 
-    companion object {
-        @Volatile
-        private var INSTANCE: AppDatabase? = null
+    abstract fun cartDao(): CartDao
 
-        fun getDatabase(context: Context): AppDatabase {
-            return INSTANCE ?: synchronized(this) {
-                Room.databaseBuilder(
-                    context.applicationContext,
-                    AppDatabase::class.java,
-                    "product_database"
-                )
-                    .fallbackToDestructiveMigration()
-                    .build().also { INSTANCE = it }
-            }
-        }
-    }
 }
 
 

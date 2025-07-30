@@ -22,7 +22,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.nectar.R
-import com.example.nectar.core.uicomponents.BigButton
+import com.example.nectar.core.uicomponents.MainButton
 import com.example.nectar.presentation.navigation.NavigationDestination
 import com.example.nectar.ui.theme.Typography
 import com.example.nectar.ui.theme.onBoardingSmallSlogun
@@ -108,7 +108,7 @@ fun OnBoardingContent(
         color = onBoardingSmallSlogun ,
     )
     Spacer(Modifier.height(40.dp))
-    BigButton(
+    MainButton(
         text = "Get started" ,
         onClick = onButtonClicked,
     )

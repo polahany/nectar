@@ -23,6 +23,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.nectar.R
+import com.example.nectar.presentation.cartscreen.CartDestination
+import com.example.nectar.presentation.explorescreen.ExploreDestination
 import com.example.nectar.presentation.mainpagescreen.MainDestination
 import com.example.nectar.ui.theme.mainBlack
 import com.example.nectar.ui.theme.mainGreen
@@ -30,8 +32,8 @@ import com.example.nectar.ui.theme.mainGreen
 
 val screens = listOf(
     MainDestination.route ,
-    "explore" ,
-    "cart"
+    ExploreDestination.route ,
+    CartDestination.route
 )
 val currentScreen= "main"
 
@@ -54,7 +56,6 @@ fun NavigationBar(
         modifier = modifier
             .height(92.dp)
             .fillMaxWidth()
-            .padding(top = 16.dp)
             .clip(RoundedCornerShape(topStart = 15.dp, topEnd = 15.dp))
             .background(Color.White)
     ) {

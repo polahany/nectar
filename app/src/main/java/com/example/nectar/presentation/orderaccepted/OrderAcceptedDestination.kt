@@ -23,13 +23,22 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.nectar.R
 import com.example.nectar.core.uicomponents.BackButton
-import com.example.nectar.core.uicomponents.BigButton
+import com.example.nectar.core.uicomponents.MainButton
+import com.example.nectar.presentation.navigation.NavigationDestination
 import com.example.nectar.ui.theme.Typography
 import com.example.nectar.ui.theme.mainBlack
 import com.example.nectar.ui.theme.secondaryText
 
+object OrderAcceptedDestination : NavigationDestination {
+    override val route = "order_accepted"
+    override val title = route
+}
+
 @Composable
-fun OrderAcceptedScreen(modifier: Modifier = Modifier) {
+fun OrderAcceptedScreen(
+    onBackToHome: () -> Unit = {},
+    modifier: Modifier = Modifier
+) {
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -42,13 +51,17 @@ fun OrderAcceptedScreen(modifier: Modifier = Modifier) {
         )
         Column {
             OrderAcceptedMessage()
-            OptionsButtons()
+            OptionsButtons(
+                onBackToHome = onBackToHome
+            )
         }
     }
 }
 
 @Composable
-fun OrderAcceptedMessage(modifier: Modifier = Modifier) {
+fun OrderAcceptedMessage(
+    modifier: Modifier = Modifier
+) {
     Column(
         verticalArrangement = Arrangement.Center ,
         horizontalAlignment = Alignment.CenterHorizontally ,
@@ -84,20 +97,23 @@ fun OrderAcceptedMessage(modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun OptionsButtons(modifier: Modifier = Modifier) {
+fun OptionsButtons(
+    onBackToHome: () -> Unit = {} ,
+    modifier: Modifier = Modifier
+) {
     Column(
         verticalArrangement = Arrangement.Center ,
         horizontalAlignment = Alignment.CenterHorizontally ,
         modifier = Modifier
             .fillMaxWidth()
     ) {
-        BigButton(
+        MainButton(
             text = "Track Order" ,
             onClick = {}
         )
         BackButton(
             text = "Back to home" ,
-            onClick = {}
+            onClick = onBackToHome
         )
     }
 }

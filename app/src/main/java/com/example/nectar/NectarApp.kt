@@ -1,13 +1,16 @@
 package com.example.nectar
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.nectar.core.uicomponents.NavigationBar
+import com.example.nectar.presentation.cartscreen.CartDestination
 import com.example.nectar.presentation.mainpagescreen.MainDestination
 import com.example.nectar.presentation.navigation.NectarNavHost
 import com.example.nectar.presentation.explorescreen.ExploreDestination
@@ -16,7 +19,7 @@ import com.example.nectar.presentation.explorescreen.ExploreDestination
 val bottomBarScreens = listOf(
     MainDestination.route,
     ExploreDestination.route,
-    "cart"
+    CartDestination.route
 )
 
 @Composable

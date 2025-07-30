@@ -28,24 +28,6 @@ import kotlinx.coroutines.launch
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-//        val db = AppDatabase.getDatabase(this)
-//        lifecycleScope.launch {
-//            db.productDao().getAll().first() // this line opens the DB and loads table/data
-//        }
-
-
-//        //  Initialize the database
-//        val db = AppDatabase.getDatabase(this)
-//        val productDao = db.productDao()
-//
-//        lifecycleScope.launch(Dispatchers.IO) {
-//            val isEmpty = productDao.getAll().first().isEmpty()
-//            if (isEmpty) {
-//                productDao.insertAll(prepopulateData())
-//            }
-//        }
-
         enableEdgeToEdge()
         installSplashScreen()
         setContent {
