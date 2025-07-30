@@ -17,6 +17,8 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -24,19 +26,36 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.nectar.data.mockdata.mocklists
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.nectar.presentation.core.uicomponents.ProductFullVerticalList
+import com.example.nectar.presentation.navigation.NavigationDestination
 import com.example.nectar.ui.theme.Typography
 import com.example.nectar.ui.theme.mainBlack
 
 
 
+object CategoryDestination : NavigationDestination{
+    override val route = "category_items"
+    override val title = route
 
+    const val categoryArg = "category"
+    val routeWithArgs = "$route/{$categoryArg}"
+}
 @Composable
 fun CategoryScreen(
-    category: String ,
+    viewModel: CategoryViewModel = hiltViewModel<CategoryViewModel>(),
+    category: String,
+    onBack: () -> Unit ,
     modifier: Modifier = Modifier
 ) {
+    val uiCategoryState by viewModel.uiState.collectAsState()
+
+    viewModel.onCategoryChange(category)
+
+    viewModel.loadPrducts()
+
+    val displayName = uiCategoryState.category.displayName
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -45,14 +64,14 @@ fun CategoryScreen(
     ) {
         Spacer(Modifier.height(32.dp))
         TopCategoryScreenBar(
-            category = category ,
-            onBack = {} ,
+            displayName = displayName ,
+            onBack = onBack ,
             onFilter = {}
         )
         Spacer(Modifier.height(20.dp))
 
         ProductFullVerticalList(
-            items = mocklists[0].second ,
+            items = uiCategoryState.products  ,
             onAddClick = {} ,
             onCardClick = {} ,
         )
@@ -61,9 +80,9 @@ fun CategoryScreen(
 
 @Composable
 fun TopCategoryScreenBar(
-    category: String,
-    onBack: () -> Unit ,
-    onFilter: () -> Unit ,
+    displayName: String,
+    onBack: () -> Unit,
+    onFilter: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Row (
@@ -83,7 +102,7 @@ fun TopCategoryScreenBar(
             )
         }
         Text(
-            text = category ,
+            text = displayName ,
             style = Typography.displaySmall ,
             fontWeight = FontWeight.Bold ,
             fontSize = 20.sp ,
@@ -108,6 +127,7 @@ fun TopCategoryScreenBar(
 @Composable
 fun CategoryScreenPreview(modifier: Modifier = Modifier) {
     CategoryScreen(
-        "Vegetable"
+        category = "Vegetable" ,
+        onBack = {} ,
     )
 }

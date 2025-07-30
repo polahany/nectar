@@ -9,14 +9,16 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.example.nectar.presentation.SplashScreen.NectarSplashScreen
 import com.example.nectar.presentation.SplashScreen.SplashScreenDestination
+import com.example.nectar.presentation.categoryscreen.CategoryDestination
+import com.example.nectar.presentation.categoryscreen.CategoryScreen
 import com.example.nectar.presentation.mainpagescreen.MainPage
 import com.example.nectar.presentation.mainpagescreen.MainDestination
 import com.example.nectar.presentation.onboardingscreen.OnBoardingDestination
 import com.example.nectar.presentation.onboardingscreen.OnBoardingScreen
 import com.example.nectar.presentation.productdetailscreen.ProductDetailDestination
 import com.example.nectar.presentation.productdetailscreen.ProductDetailScreen
-import com.example.nectar.presentation.searchscreen.FindDestination
-import com.example.nectar.presentation.searchscreen.FindProductScreen
+import com.example.nectar.presentation.explorescreen.ExploreDestination
+import com.example.nectar.presentation.explorescreen.ExploreProductScreen
 
 @Composable
 fun NectarNavHost(
@@ -60,6 +62,12 @@ fun NectarNavHost(
                         "${ProductDetailDestination.route}/${product.id}"
                     )
                 } ,
+                onCategoryClick = {
+                    category ->
+                    navController.navigate(
+                        "${CategoryDestination.route}/$category"
+                    )
+                }
             )
         }
 
@@ -82,9 +90,35 @@ fun NectarNavHost(
         }
 
         composable(
-            route = FindDestination.route
+            route = ExploreDestination.route
         ) {
-            FindProductScreen()
+            ExploreProductScreen(
+                onCategoryClick = {
+                    category ->
+                    navController.navigate(
+                        "${CategoryDestination.route}/$category"
+                    )
+                }
+            )
         }
+
+        composable (
+            route = CategoryDestination.routeWithArgs ,
+            arguments = listOf(
+                navArgument(
+                    name = CategoryDestination.categoryArg
+                ){
+                    type = NavType.StringType
+                }
+            )
+        ){
+            backStackEntry ->
+            val category = backStackEntry.arguments?.getString(CategoryDestination.categoryArg) ?: ""
+            CategoryScreen(
+                category = category ,
+                onBack = { navController.navigateUp() }
+            )
+        }
+
     }
 }

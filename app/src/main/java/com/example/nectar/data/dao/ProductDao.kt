@@ -18,4 +18,10 @@ interface ProductDao {
     @Query("SELECT * FROM products WHERE id = :productId")
     suspend fun getProductById(productId: Int): Product
 
+    @Query("SELECT * FROM products WHERE LOWER(name) LIKE '%' || LOWER(:query) || '%'")
+    fun searchProductsByName(query: String): Flow<List<Product>>
+
+    @Query("SELECT * FROM products WHERE LOWER(category) = LOWER(:category)")
+    fun getProductsByCategory(category: String): Flow<List<Product>>
+
 }

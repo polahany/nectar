@@ -21,12 +21,13 @@ import com.example.nectar.ui.theme.secondaryText
 
 @Composable
 fun SearchBar(
-    onValueChange: (String) -> Unit,
+    query: String,
+    onSearchQueryChange: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     TextField(
-        value = "",
-        onValueChange = onValueChange,
+        value = query,
+        onValueChange = onSearchQueryChange,
         placeholder = {
             Text(text = "Search Store",
                 color = secondaryText ,
@@ -61,6 +62,7 @@ fun SearchBar(
 @Composable
 fun SearchBarPreview(modifier: Modifier = Modifier) {
     SearchBar(
-        onValueChange = {}
+        onSearchQueryChange = { }  ,
+        query = "",
     )
 }

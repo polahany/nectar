@@ -64,6 +64,7 @@ fun ProductCard(
                 contentDescription = product.name,
                 contentScale = ContentScale.Crop,
                 modifier = Modifier.size(104.dp, 62.dp)
+                    .clickable { onCardClick(product) }
             )
 
             Spacer(Modifier.height(32.dp))

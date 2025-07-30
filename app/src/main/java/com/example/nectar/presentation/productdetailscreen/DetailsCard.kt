@@ -47,7 +47,7 @@ fun DetailsCard(
             .height(370.dp)
             .clip(RoundedCornerShape(bottomStart =  25.dp , bottomEnd = 25.dp))
             .background(itemBackGround)
-            .padding(top = 56.dp) ,
+            .padding(top = 24.dp) ,
     ) {
         product?.let {
             DetailsCardButtons(
@@ -86,7 +86,7 @@ fun DetailsCardButtons(
                 imageVector = Icons.Default.KeyboardArrowLeft ,
                 contentDescription = "back from details" ,
                 modifier = Modifier
-                    .size(height = 36.dp , width = 20.dp)
+                    .size(height = 40.dp , width = 28.dp)
             )
         }
         Spacer(Modifier.weight(1f))
