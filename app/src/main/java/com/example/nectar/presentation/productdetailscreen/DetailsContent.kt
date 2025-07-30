@@ -23,10 +23,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -34,7 +30,7 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.nectar.core.uicomponents.BigButton
+import com.example.nectar.core.uicomponents.MainButton
 import com.example.nectar.domain.model.Product
 import com.example.nectar.ui.theme.Shapes
 import com.example.nectar.ui.theme.Typography
@@ -44,9 +40,11 @@ import com.example.nectar.ui.theme.secondaryText
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.nectar.ui.theme.NectarTheme
 import com.example.nectar.data.mockdata.mockitem
+import com.example.nectar.presentation.cartscreen.CartUiState
 
 @Composable
 fun DetailsContent(
+    state: productDetailUiState ,
     product: Product?,
     onMinusClick: () -> Unit,
     onAddClick: () -> Unit,
@@ -55,6 +53,7 @@ fun DetailsContent(
     onExpandReview: () -> Unit,
     onReview: () -> Unit,
     onButtonClick: () -> Unit,
+    onBack: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -76,7 +75,12 @@ fun DetailsContent(
 
                 Spacer(Modifier.height(32.dp))
 
-                CartButtonsAndPriceRow(product = product)
+                CartButtonsAndPriceRow(
+                    state = state ,
+                    onMinusClick = onMinusClick,
+                    onAddClick = onAddClick,
+                    product = product
+                )
 
                 Spacer(Modifier.height(16.dp))
 
@@ -104,9 +108,12 @@ fun DetailsContent(
 
                 Spacer(Modifier.height(16.dp))
 
-                BigButton(
+                MainButton(
                     text = "Add To Basket",
-                    onClick = onButtonClick
+                    onClick = {
+                        onButtonClick()
+                        onBack()
+                    }
                 )
             }
         }
@@ -115,13 +122,20 @@ fun DetailsContent(
 
 @Composable
 fun CartButtonsAndPriceRow(
+    state: productDetailUiState,
     product: Product,
+    onMinusClick: () -> Unit,
+    onAddClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Row (
         verticalAlignment = Alignment.CenterVertically ,
     ){
-        CartButtons()
+        CartButtons(
+            state = state ,
+            onMinusClick = onMinusClick,
+            onAddClick = onAddClick
+        )
         Spacer(Modifier.weight(1f))
         Text(
             text = "$${product.price}" ,
@@ -132,10 +146,13 @@ fun CartButtonsAndPriceRow(
 }
 
 @Composable
-fun CartButtons(modifier: Modifier = Modifier) {
-    var cart by remember {
-        mutableStateOf(0)
-    }
+fun CartButtons(
+    state: productDetailUiState ,
+    onMinusClick: () -> Unit ,
+    onAddClick: () -> Unit ,
+    modifier: Modifier = Modifier
+) {
+
     Row(
         verticalAlignment = Alignment.CenterVertically ,
         horizontalArrangement = Arrangement.SpaceBetween,
@@ -143,11 +160,7 @@ fun CartButtons(modifier: Modifier = Modifier) {
             .width(120.dp)
     ) {
         IconButton(
-            onClick = {
-                if(cart > 0){
-                    cart = cart - 1
-                }
-            }
+            onClick = onMinusClick
         ) {
             Icon(
                 imageVector = Icons.Filled.Remove ,
@@ -182,16 +195,14 @@ fun CartButtons(modifier: Modifier = Modifier) {
                 modifier = Modifier.fillMaxSize()
             ) {
                 Text(
-                    text = cart.toString(),
+                    text = state.currentCart.toString(),
                     style = Typography.titleMedium,
                     color = mainBlack,
                 )
             }
         }
         IconButton(
-            onClick = {
-               cart = cart + 1
-            }
+            onClick = onAddClick
         ) {
             Icon(
                 imageVector = Icons.Filled.Add ,
@@ -255,7 +266,9 @@ fun DetailsContentPreview() {
             onExpandNutrition = {},
             onExpandReview = {},
             onReview = {},
-            onButtonClick = {}
+            onButtonClick = {} ,
+            state = productDetailUiState() ,
+            onBack = {}
         )
     }
 }

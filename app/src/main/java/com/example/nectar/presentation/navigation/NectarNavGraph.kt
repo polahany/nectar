@@ -9,6 +9,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.example.nectar.presentation.SplashScreen.NectarSplashScreen
 import com.example.nectar.presentation.SplashScreen.SplashScreenDestination
+import com.example.nectar.presentation.cartscreen.CartDestination
+import com.example.nectar.presentation.cartscreen.CartScreen
 import com.example.nectar.presentation.categoryscreen.CategoryDestination
 import com.example.nectar.presentation.categoryscreen.CategoryScreen
 import com.example.nectar.presentation.mainpagescreen.MainPage
@@ -19,6 +21,8 @@ import com.example.nectar.presentation.productdetailscreen.ProductDetailDestinat
 import com.example.nectar.presentation.productdetailscreen.ProductDetailScreen
 import com.example.nectar.presentation.explorescreen.ExploreDestination
 import com.example.nectar.presentation.explorescreen.ExploreProductScreen
+import com.example.nectar.presentation.orderaccepted.OrderAcceptedDestination
+import com.example.nectar.presentation.orderaccepted.OrderAcceptedScreen
 
 @Composable
 fun NectarNavHost(
@@ -116,9 +120,38 @@ fun NectarNavHost(
             val category = backStackEntry.arguments?.getString(CategoryDestination.categoryArg) ?: ""
             CategoryScreen(
                 category = category ,
-                onBack = { navController.navigateUp() }
+                onBack = { navController.navigateUp() } ,
+                onCardClick = {
+                        product ->
+                    navController.navigate(
+                        "${ProductDetailDestination.route}/${product.id}"
+                    )
+                }
             )
         }
 
+        composable(
+            route = CartDestination.route
+        ) {
+            CartScreen(
+                navigateToOrderCheckout = {
+                    navController.navigate(
+                        OrderAcceptedDestination.route
+                    )
+                }
+            )
+        }
+
+        composable(
+            route = OrderAcceptedDestination.route
+        ) {
+            OrderAcceptedScreen(
+                onBackToHome = {
+                    navController.navigate(MainDestination.route) {
+                        popUpTo(OrderAcceptedDestination.route) {inclusive = true}
+                    }
+                }
+            )
+        }
     }
 }

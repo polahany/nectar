@@ -14,7 +14,6 @@ import com.example.nectar.domain.model.Product
 @Composable
 fun ProductFullVerticalList(
     items: List<Product>,
-    onAddClick: () -> Unit,
     onCardClick: (Product) -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -29,7 +28,7 @@ fun ProductFullVerticalList(
             item ->
             ProductCard(
                 product = item ,
-                onAddClick = onAddClick ,
+                onAddClick = {} ,
                 onCardClick = onCardClick
             )
         }

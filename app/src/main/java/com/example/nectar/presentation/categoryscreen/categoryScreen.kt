@@ -27,6 +27,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.nectar.domain.model.Product
 import com.example.nectar.presentation.core.uicomponents.ProductFullVerticalList
 import com.example.nectar.presentation.navigation.NavigationDestination
 import com.example.nectar.ui.theme.Typography
@@ -45,7 +46,8 @@ object CategoryDestination : NavigationDestination{
 fun CategoryScreen(
     viewModel: CategoryViewModel = hiltViewModel<CategoryViewModel>(),
     category: String,
-    onBack: () -> Unit ,
+    onBack: () -> Unit,
+    onCardClick: (Product) -> Unit,
     modifier: Modifier = Modifier
 ) {
     val uiCategoryState by viewModel.uiState.collectAsState()
@@ -72,8 +74,7 @@ fun CategoryScreen(
 
         ProductFullVerticalList(
             items = uiCategoryState.products  ,
-            onAddClick = {} ,
-            onCardClick = {} ,
+            onCardClick = onCardClick ,
         )
     }
 }
@@ -129,5 +130,6 @@ fun CategoryScreenPreview(modifier: Modifier = Modifier) {
     CategoryScreen(
         category = "Vegetable" ,
         onBack = {} ,
+        onCardClick = {}
     )
 }

@@ -1,5 +1,6 @@
 package com.example.nectar.core.uicomponents
 
+import android.util.Log
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Add
@@ -11,15 +12,22 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.nectar.data.mockdata.mockitem
+import com.example.nectar.domain.model.Product
+import com.example.nectar.presentation.core.uicomponents.commonUiViewModel
 import com.example.nectar.ui.theme.mainGreen
 
 @Composable
 fun AddButton(
-    onAddClick: () -> Unit,
+    product: Product,
+    viewModel: commonUiViewModel = hiltViewModel<commonUiViewModel>() ,
     modifier: Modifier = Modifier
 ) {
     IconButton(
-        onClick = onAddClick,
+        onClick = {
+            viewModel.onAddToCartClicked(product)
+                  },
         modifier = modifier
             .size(45.dp) ,
         colors = IconButtonDefaults.iconButtonColors(
@@ -40,6 +48,6 @@ fun AddButton(
 @Composable
 fun AddVuttonPreview(modifier: Modifier = Modifier) {
     AddButton(
-        onAddClick = {}
+        product = mockitem,
     )
 }

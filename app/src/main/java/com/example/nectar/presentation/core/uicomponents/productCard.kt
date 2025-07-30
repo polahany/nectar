@@ -94,7 +94,7 @@ fun ProductCard(
                 )
                 Spacer(Modifier.weight(1f))
                 AddButton(
-                    onAddClick = onAddClick,
+                    product = product,
                 )
             }
         }
