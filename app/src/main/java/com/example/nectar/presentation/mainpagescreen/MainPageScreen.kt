@@ -18,14 +18,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.room.Query
 import com.example.nectar.core.uicomponents.ProductsList
 import com.example.nectar.core.uicomponents.SearchBar
 import com.example.nectar.domain.model.Category
 import com.example.nectar.domain.model.Product
 import com.example.nectar.presentation.core.uicomponents.CategoryList
 import com.example.nectar.presentation.navigation.NavigationDestination
-import java.util.Locale
 
 
 object MainDestination : NavigationDestination{
@@ -37,6 +35,7 @@ object MainDestination : NavigationDestination{
 fun MainPage(
     onCardClick: (Product) -> Unit,
     onCategoryClick: (Category) -> Unit,
+    onSearchClick: () -> Unit,
     viewModel: MainPageViewModel = hiltViewModel<MainPageViewModel>(),
     modifier: Modifier = Modifier
 ) {
@@ -44,7 +43,7 @@ fun MainPage(
     MainPageContent(
         uiMainState = mainState,
         onCardClick = onCardClick,
-        onSearchQueryChange = {viewModel.onSearchQueryChange(it)},
+        onSearchClick = onSearchClick,
         onCategoryClick = onCategoryClick,
     )
 }
@@ -54,7 +53,7 @@ fun MainPage(
 fun MainPageContent(
     uiMainState: UiMainState,
     onCardClick : (Product) -> Unit,
-    onSearchQueryChange : (String) -> Unit,
+    onSearchClick : () -> Unit,
     onCategoryClick: (Category) -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -72,8 +71,9 @@ fun MainPageContent(
             LogoAndLocation()
             Spacer(Modifier.height(24.dp))
             SearchBar(
-                query = uiMainState.searchQuery,
-                onSearchQueryChange = onSearchQueryChange
+                onClick = onSearchClick ,
+                query = "",
+                onSearchQueryChange = { } ,
             )
             Spacer(Modifier.height(24.dp))
             Adverstisment()
@@ -120,6 +120,6 @@ fun MainPageContent(
 @Preview
 @Composable
 fun MainScreenPreview(modifier: Modifier = Modifier) {
-    MainPage({} ,{})
+    MainPage({} ,{} ,{})
 }
 

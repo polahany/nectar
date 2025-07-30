@@ -69,11 +69,4 @@ class MainPageViewModel @Inject constructor(
             }
         }
     }
-
-
-    fun onSearchQueryChange(query: String) {
-        _uiState.update {
-            it.copy(searchQuery = query)
-        }
-    }
 }

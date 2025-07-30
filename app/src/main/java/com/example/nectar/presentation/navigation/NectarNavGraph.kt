@@ -23,6 +23,8 @@ import com.example.nectar.presentation.explorescreen.ExploreDestination
 import com.example.nectar.presentation.explorescreen.ExploreProductScreen
 import com.example.nectar.presentation.orderaccepted.OrderAcceptedDestination
 import com.example.nectar.presentation.orderaccepted.OrderAcceptedScreen
+import com.example.nectar.presentation.searchscreen.SearchDestination
+import com.example.nectar.presentation.searchscreen.SearchScreen
 
 @Composable
 fun NectarNavHost(
@@ -71,6 +73,9 @@ fun NectarNavHost(
                     navController.navigate(
                         "${CategoryDestination.route}/$category"
                     )
+                } ,
+                onSearchClick = {
+                    navController.navigate(SearchDestination.route)
                 }
             )
         }
@@ -102,6 +107,9 @@ fun NectarNavHost(
                     navController.navigate(
                         "${CategoryDestination.route}/$category"
                     )
+                } ,
+                onSearchClick = {
+                    navController.navigate(SearchDestination.route)
                 }
             )
         }
@@ -150,6 +158,20 @@ fun NectarNavHost(
                     navController.navigate(MainDestination.route) {
                         popUpTo(OrderAcceptedDestination.route) {inclusive = true}
                     }
+                }
+            )
+        }
+
+        composable(
+            SearchDestination.route
+        ) {
+            SearchScreen(
+                onCancel = { navController.navigateUp() } ,
+                onCardClick = {
+                        product ->
+                    navController.navigate(
+                        "${ProductDetailDestination.route}/${product.id}"
+                    )
                 }
             )
         }

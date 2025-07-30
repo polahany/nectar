@@ -1,6 +1,5 @@
-package com.example.nectar.presentation.core.uicomponents
+package com.example.nectar.presentation.core.uicomponents.addbutton
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.nectar.domain.model.Product

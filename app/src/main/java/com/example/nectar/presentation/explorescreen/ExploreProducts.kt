@@ -36,6 +36,7 @@ object ExploreDestination : NavigationDestination{
 
 @Composable
 fun ExploreProductScreen(
+    onSearchClick: () -> Unit,
     onCategoryClick: (Category) -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -56,8 +57,9 @@ fun ExploreProductScreen(
         )
         Spacer(Modifier.height(28.dp))
         SearchBar(
-            query = "",
-            onSearchQueryChange = {} ,
+            onClick = onSearchClick ,
+            query = "" ,
+            onSearchQueryChange = { } ,
         )
         Spacer(Modifier.height(20.dp))
         LazyVerticalGrid(
@@ -81,5 +83,5 @@ fun ExploreProductScreen(
 @Preview
 @Composable
 fun FindProductScreenPreview(modifier: Modifier = Modifier) {
-    ExploreProductScreen({})
+    ExploreProductScreen({} , {})
 }
