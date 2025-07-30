@@ -36,8 +36,6 @@ fun ProductDetailScreen(
     modifier: Modifier = Modifier
 ) {
 
-    Log.d("detail screen", productId.toString())
-
     val context = LocalContext.current
     val productDao = remember { AppDatabase.getDatabase(context).productDao() }
 

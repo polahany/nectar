@@ -17,11 +17,14 @@ import com.example.nectar.data.mockdata.mockitem
 import com.example.nectar.presentation.SplashScreen.NectarSplashScreen
 import com.example.nectar.presentation.productdetailscreen.ProductDetailScreen
 import com.example.nectar.ui.theme.NectarTheme
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
+
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,16 +35,16 @@ class MainActivity : ComponentActivity() {
 //        }
 
 
-        //  Initialize the database
-        val db = AppDatabase.getDatabase(this)
-        val productDao = db.productDao()
-
-        lifecycleScope.launch(Dispatchers.IO) {
-            val isEmpty = productDao.getAll().first().isEmpty()
-            if (isEmpty) {
-                productDao.insertAll(prepopulateData())
-            }
-        }
+//        //  Initialize the database
+//        val db = AppDatabase.getDatabase(this)
+//        val productDao = db.productDao()
+//
+//        lifecycleScope.launch(Dispatchers.IO) {
+//            val isEmpty = productDao.getAll().first().isEmpty()
+//            if (isEmpty) {
+//                productDao.insertAll(prepopulateData())
+//            }
+//        }
 
         enableEdgeToEdge()
         installSplashScreen()

@@ -9,21 +9,23 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
-import com.example.nectar.core.uicomponents.NavigationBar
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.room.Query
 import com.example.nectar.core.uicomponents.ProductsList
 import com.example.nectar.core.uicomponents.SearchBar
-import com.example.nectar.data.mockdata.mocklists
+import com.example.nectar.domain.model.Category
 import com.example.nectar.domain.model.Product
+import com.example.nectar.presentation.core.uicomponents.CategoryList
 import com.example.nectar.presentation.navigation.NavigationDestination
+import java.util.Locale
 
 
 object MainDestination : NavigationDestination{
@@ -34,18 +36,26 @@ object MainDestination : NavigationDestination{
 @Composable
 fun MainPage(
     onCardClick: (Product) -> Unit,
+    onCategoryClick: (Category) -> Unit,
+    viewModel: MainPageViewModel = hiltViewModel<MainPageViewModel>(),
     modifier: Modifier = Modifier
 ) {
+    val mainState by viewModel.uiState.collectAsState()
     MainPageContent(
+        uiMainState = mainState,
         onCardClick = onCardClick,
-        modifier = modifier
+        onSearchQueryChange = {viewModel.onSearchQueryChange(it)},
+        onCategoryClick = onCategoryClick,
     )
 }
 
 
 @Composable
 fun MainPageContent(
+    uiMainState: UiMainState,
     onCardClick : (Product) -> Unit,
+    onSearchQueryChange : (String) -> Unit,
+    onCategoryClick: (Category) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -62,7 +72,8 @@ fun MainPageContent(
             LogoAndLocation()
             Spacer(Modifier.height(24.dp))
             SearchBar(
-                onValueChange = {}
+                query = uiMainState.searchQuery,
+                onSearchQueryChange = onSearchQueryChange
             )
             Spacer(Modifier.height(24.dp))
             Adverstisment()
@@ -73,25 +84,42 @@ fun MainPageContent(
                 .fillMaxWidth()
                 .padding(start = 24.dp)
         ) {
-            items(mocklists){
-                    (title , items)->
+            item {
                 ProductsList(
-                    name = title ,
-                    type = title ,
-                    items = items,
+                    name = "Exclusive Offer" ,
+                    type = "exclusive" ,
+                    items = uiMainState.exclusiveOrdersList ,
                     onCardClick = onCardClick ,
                     onClick = {} ,
                 )
+            }
+
+            item {
+                CategoryList(
+                    categories = uiMainState.categoriesList,
+                    onSeeAllClick = {},
+                    onCategoryClick = onCategoryClick ,
+                )
+            }
+            items(uiMainState.productsList) { list ->
+                if (list.isNotEmpty()) {
+                    ProductsList(
+                        name = list[0].category,
+                        type = "products",
+                        items = list,
+                        onCardClick = onCardClick,
+                        onClick = {}
+                    )
+                }
             }
         }
     }
 }
 
 
-
-
 @Preview
 @Composable
-fun MainPagePreview(modifier: Modifier = Modifier) {
-    MainPage({}  )
+fun MainScreenPreview(modifier: Modifier = Modifier) {
+    MainPage({} ,{})
 }
+

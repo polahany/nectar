@@ -24,31 +24,30 @@ import com.example.nectar.ui.theme.Typography
 import com.example.nectar.ui.theme.mainBlack
 
 @Composable
-fun CategoryCard(
+fun HorizontalCategoryCard(
     category: Category ,
     onClick: (Category) -> Unit
 ) {
     Box(
         modifier = Modifier
-            .size(width = 174.dp , height = 190.dp)
+            .size(width = 248.dp , height = 105.dp)
             .clip(Shapes.small)
             .background(category.backgroundColor)
             .border(width = 1.dp, color = category.borderColor, shape = Shapes.small)
             .clickable { onClick(category) },
         contentAlignment = Alignment.Center
     ) {
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
+        Row (
+            verticalAlignment = Alignment.CenterVertically
         ) {
             Image(
                 painter = painterResource(id = category.imageRes),
                 contentDescription = category.displayName,
                 modifier = Modifier
-                    .size(94.dp)
+                    .size(72.dp)
                     .clickable { onClick(category) }
             )
-            Spacer(modifier = Modifier.height(8.dp))
+            Spacer(modifier = Modifier.width(8.dp))
             Text(
                 text = category.displayName,
                 style = Typography.displaySmall ,

@@ -45,21 +45,5 @@ val cancelIcon = Color(197, 197, 197)
 val darkerGreen = Color(72, 158, 103)
 
 
-//categories
 
-val categoriesWithOnlyBody = listOf<Color>(
-    Color(248, 164, 76) ,
-    mainGreen
-)
-
-val categoryColorsBodyAndBoarder = listOf<Pair<Color , Color>>(
-    Color(83, 177, 117, 26) to Color(83, 177, 117, 179),     // 0.1 and 0.7 alpha
-    Color(248, 164, 76, 26) to Color(248, 164, 76, 179),
-    Color(247, 165, 147, 64) to Color(247, 165, 147, 255),
-    Color(211, 176, 224, 64) to Color(211, 176, 224, 255),
-    Color(253, 229, 152, 64) to Color(253, 229, 152, 255),
-    Color(183, 223, 245, 64) to Color(183, 223, 245, 255),
-    Color(131, 106, 246, 38) to Color(131, 106, 246, 128),   // 0.15 and 0.5
-    Color(215, 59, 119, 38) to Color(215, 59, 119, 128)
-)
 

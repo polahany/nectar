@@ -1,4 +1,4 @@
-package com.example.nectar.presentation.searchscreen
+package com.example.nectar.presentation.explorescreen
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -19,41 +20,25 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.nectar.R
 import com.example.nectar.core.uicomponents.SearchBar
+import com.example.nectar.domain.model.Category
 import com.example.nectar.presentation.core.uicomponents.CategoryCard
 import com.example.nectar.presentation.navigation.NavigationDestination
 import com.example.nectar.ui.theme.Typography
-import com.example.nectar.ui.theme.categoryColorsBodyAndBoarder
 import com.example.nectar.ui.theme.mainBlack
 
 
-object FindDestination : NavigationDestination{
+object ExploreDestination : NavigationDestination{
     override val route = "explore"
     override val title = route
 }
 
 
-val categories = listOf(
-    "Fresh Fruits & Vegetables" ,
-    "Cooking Oil & Ghee" ,
-    "Meat & Fish" ,
-    "Bakery & Snacks" ,
-    "Dairy & Eggs" ,
-    "Beverages"
-)
-
-val categoryImages = listOf(
-    R.drawable.freshvegi ,
-    R.drawable.oil ,
-    R.drawable.meat ,
-    R.drawable.bakery ,
-    R.drawable.dairy ,
-    R.drawable.beverages ,
-)
-
 @Composable
-fun FindProductScreen(modifier: Modifier = Modifier) {
+fun ExploreProductScreen(
+    onCategoryClick: (Category) -> Unit,
+    modifier: Modifier = Modifier
+) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
@@ -71,7 +56,8 @@ fun FindProductScreen(modifier: Modifier = Modifier) {
         )
         Spacer(Modifier.height(28.dp))
         SearchBar(
-            onValueChange = {} ,
+            query = "",
+            onSearchQueryChange = {} ,
         )
         Spacer(Modifier.height(20.dp))
         LazyVerticalGrid(
@@ -81,14 +67,10 @@ fun FindProductScreen(modifier: Modifier = Modifier) {
             modifier = Modifier
                 .fillMaxWidth()
         ) {
-            items(categories.size){
-                categoryNumber ->
+            items(Category.values()) { category ->
                 CategoryCard(
-                    imageRes = categoryImages[categoryNumber] ,
-                    title = categories[categoryNumber] ,
-                    backgroundColor = categoryColorsBodyAndBoarder[categoryNumber].first,
-                    borderColor = categoryColorsBodyAndBoarder[categoryNumber].second,
-                    onClick = {}
+                    category = category,
+                    onClick = onCategoryClick
                 )
             }
         }
@@ -99,5 +81,5 @@ fun FindProductScreen(modifier: Modifier = Modifier) {
 @Preview
 @Composable
 fun FindProductScreenPreview(modifier: Modifier = Modifier) {
-    FindProductScreen()
+    ExploreProductScreen({})
 }
