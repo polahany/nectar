@@ -59,25 +59,45 @@ class CartViewModel @Inject constructor(
         _uiState.update { state ->
             val currentCount = state.cartCounts[item.id] ?: item.quantity
             val newCount = currentCount + 1
+
+            val updatedCartCounts = state.cartCounts.toMutableMap().apply {
+                this[item.id] = newCount
+            }
+
+            val updatedTotal = state.cartItems.sumOf {
+                val count = updatedCartCounts[it.id] ?: it.quantity
+                it.price * count
+            }
+
             state.copy(
-                cartCounts = state.cartCounts.toMutableMap().apply {
-                    this[item.id] = newCount
-                }
+                cartCounts = updatedCartCounts,
+                totalPrice = updatedTotal
             )
         }
     }
+
 
     fun decrementItemCount(item: CartItem) {
         _uiState.update { state ->
             val currentCount = state.cartCounts[item.id] ?: item.quantity
             val newCount = (currentCount - 1).coerceAtLeast(0)
+
+            val updatedCartCounts = state.cartCounts.toMutableMap().apply {
+                this[item.id] = newCount
+            }
+
+            val updatedTotal = state.cartItems.sumOf {
+                val count = updatedCartCounts[it.id] ?: it.quantity
+                it.price * count
+            }
+
             state.copy(
-                cartCounts = state.cartCounts.toMutableMap().apply {
-                    this[item.id] = newCount
-                }
+                cartCounts = updatedCartCounts,
+                totalPrice = updatedTotal
             )
         }
     }
+
 
 
     fun deleteCartItem(cartItem: CartItem) {
@@ -88,7 +108,7 @@ class CartViewModel @Inject constructor(
     }
 
     private fun updateUiState(cartItems: List<CartItem>) {
-        val cartCounts = cartItems.associate { it.productId to it.quantity }
+        val cartCounts = cartItems.associate { it.id to it.quantity }
         val total = cartItems.sumOf { it.totalPrice }
 
         _uiState.value = _uiState.value.copy(
