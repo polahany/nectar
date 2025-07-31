@@ -14,12 +14,14 @@ import com.example.nectar.presentation.cartscreen.CartDestination
 import com.example.nectar.presentation.mainpagescreen.MainDestination
 import com.example.nectar.presentation.navigation.NectarNavHost
 import com.example.nectar.presentation.explorescreen.ExploreDestination
+import com.example.nectar.presentation.searchscreen.SearchDestination
 
 
 val bottomBarScreens = listOf(
     MainDestination.route,
     ExploreDestination.route,
-    CartDestination.route
+    CartDestination.route ,
+    SearchDestination.route
 )
 
 @Composable

@@ -40,6 +40,7 @@ fun SearchScreen(
     viewModel: SearchViewModel = hiltViewModel<SearchViewModel>(),
     onCardClick: (Product) -> Unit,
     onCancel: () -> Unit,
+    onFilterClicked: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -71,11 +72,11 @@ fun SearchScreen(
                 )
             }
             IconButton(
-                onClick = {}
+                onClick = onFilterClicked
             ) {
                 Icon(
                     imageVector = Icons.Default.Tune ,
-                    contentDescription = "back from details" ,
+                    contentDescription = "tune" ,
                     modifier = Modifier
                         .size(height = 36.dp , width = 20.dp)
                 )
@@ -95,6 +96,7 @@ fun SearchScreen(
 fun SearchScreenPreview(modifier: Modifier = Modifier) {
     SearchScreen(
         onCardClick = {} ,
-        onCancel = {}
+        onCancel = {} ,
+        onFilterClicked = {}
     )
 }

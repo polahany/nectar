@@ -21,6 +21,8 @@ import com.example.nectar.presentation.productdetailscreen.ProductDetailDestinat
 import com.example.nectar.presentation.productdetailscreen.ProductDetailScreen
 import com.example.nectar.presentation.explorescreen.ExploreDestination
 import com.example.nectar.presentation.explorescreen.ExploreProductScreen
+import com.example.nectar.presentation.filterScreen.FilterScreen
+import com.example.nectar.presentation.filterScreen.FilterDestination
 import com.example.nectar.presentation.orderaccepted.OrderAcceptedDestination
 import com.example.nectar.presentation.orderaccepted.OrderAcceptedScreen
 import com.example.nectar.presentation.searchscreen.SearchDestination
@@ -167,6 +169,23 @@ fun NectarNavHost(
         ) {
             SearchScreen(
                 onCancel = { navController.navigateUp() } ,
+                onCardClick = {
+                        product ->
+                    navController.navigate(
+                        "${ProductDetailDestination.route}/${product.id}"
+                    )
+                } ,
+                onFilterClicked = {
+                    navController.navigate(FilterDestination.route)
+                }
+            )
+        }
+
+        composable(
+            route = FilterDestination.route
+        ) {
+            FilterScreen(
+                onBack = { navController.navigateUp() } ,
                 onCardClick = {
                         product ->
                     navController.navigate(

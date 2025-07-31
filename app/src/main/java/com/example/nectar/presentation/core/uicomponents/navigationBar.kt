@@ -26,6 +26,7 @@ import com.example.nectar.R
 import com.example.nectar.presentation.cartscreen.CartDestination
 import com.example.nectar.presentation.explorescreen.ExploreDestination
 import com.example.nectar.presentation.mainpagescreen.MainDestination
+import com.example.nectar.presentation.searchscreen.SearchDestination
 import com.example.nectar.ui.theme.mainBlack
 import com.example.nectar.ui.theme.mainGreen
 
@@ -33,9 +34,8 @@ import com.example.nectar.ui.theme.mainGreen
 val screens = listOf(
     MainDestination.route ,
     ExploreDestination.route ,
-    CartDestination.route
+    CartDestination.route ,
 )
-val currentScreen= "main"
 
 val icons = listOf(
     R.drawable.marketvectorsvg ,
@@ -61,7 +61,8 @@ fun NavigationBar(
     ) {
         screens.forEachIndexed { index, screen ->
             NavigationIcon(
-                isSelected = currentRoute == screen,
+                isSelected = currentRoute == screen ||
+                        (screen == ExploreDestination.route && currentRoute == SearchDestination.route),
                 icon = icons[index],
                 onClick = {
                     if (currentRoute != screen) {

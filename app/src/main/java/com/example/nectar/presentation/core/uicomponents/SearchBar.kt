@@ -8,6 +8,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Cancel
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
@@ -74,12 +75,16 @@ fun SearchBar(
 
         trailingIcon = {
             if (query.isNotEmpty()) {
-                Icon(
-                    imageVector = Icons.Default.Cancel,
-                    contentDescription = "Cancel Icon",
-                    modifier = Modifier
-                        .size(width = 18.dp , height = 18.dp)
-                )
+                IconButton(
+                    onClick = onCancel
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Cancel,
+                        contentDescription = "Cancel Icon",
+                        modifier = Modifier
+                            .size(width = 18.dp, height = 18.dp)
+                    )
+                }
             }
         }
 
