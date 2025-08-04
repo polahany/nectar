@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowLeft
+import androidx.compose.material.icons.rounded.KeyboardArrowLeft
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
@@ -83,7 +84,7 @@ fun DetailsCardButtons(
             onClick = onBack
         ) {
             Icon(
-                imageVector = Icons.Default.KeyboardArrowLeft ,
+                imageVector = Icons.Rounded.KeyboardArrowLeft ,
                 contentDescription = "back from details" ,
                 modifier = Modifier
                     .size(height = 40.dp , width = 28.dp)

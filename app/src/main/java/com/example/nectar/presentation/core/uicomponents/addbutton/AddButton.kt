@@ -3,6 +3,7 @@ package com.example.nectar.core.uicomponents
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Add
+import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.IconButtonDefaults
@@ -35,7 +36,7 @@ fun AddButton(
         ) ,
     ) {
         Icon(
-            imageVector = Icons.Outlined.Add,
+            imageVector = Icons.Rounded.Add,
             contentDescription = "add to cart",
             tint = Color.White,
             modifier = Modifier.size(20.dp)

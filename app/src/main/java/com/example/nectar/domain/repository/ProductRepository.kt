@@ -13,4 +13,7 @@ interface ProductRepository {
     fun searchProductsByName(query: String): Flow<List<Product>>
 
     fun getProductsByCategory(category: String): Flow<List<Product>>
+
+    suspend fun toggleAndReturnFavourite(productId: Int): Boolean
+
 }

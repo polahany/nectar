@@ -7,6 +7,9 @@ import com.example.nectar.data.database.prepopulateData
 import com.example.nectar.domain.model.Category
 import com.example.nectar.domain.model.Product
 import com.example.nectar.domain.repository.ProductRepository
+import com.example.nectar.domain.useCases.productusecases.GetAllProductsUseCase
+import com.example.nectar.domain.useCases.productusecases.GetProductsByCategoryUseCase
+import com.example.nectar.domain.useCases.productusecases.prepopulateDataBaseUseCase
 import com.example.nectar.presentation.mainpagescreen.UiMainState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -20,7 +23,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MainPageViewModel @Inject constructor(
-    private val productRepository: ProductRepository
+    private val getAllProductsUseCase: GetAllProductsUseCase ,
+    private val prepopulateDataBaseUseCase: prepopulateDataBaseUseCase ,
+    private val getProductsByCategoryUseCase: GetProductsByCategoryUseCase
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(UiMainState())
@@ -28,9 +33,9 @@ class MainPageViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            val products = productRepository.getAll().first()
+            val products = getAllProductsUseCase().first()
             if (products.isEmpty()) {
-                productRepository.insertAll(prepopulateData())
+                prepopulateDataBaseUseCase(prepopulateData())
             }
         }
         loadCategories()
@@ -46,7 +51,7 @@ class MainPageViewModel @Inject constructor(
 
     private fun loadExclusiveOrders() {
         viewModelScope.launch {
-            productRepository.getAll().collect { products ->
+            getAllProductsUseCase().collect { products ->
                 _uiState.update {
                     it.copy(exclusiveOrdersList = products)
                 }
@@ -57,7 +62,7 @@ class MainPageViewModel @Inject constructor(
     private fun loadProductsByCategories() {
         viewModelScope.launch {
             val categoryFlows = Category.values().map { category ->
-                productRepository.getProductsByCategory(category.displayName)
+                getProductsByCategoryUseCase(category.displayName)
             }
 
             combine(categoryFlows) { productLists ->

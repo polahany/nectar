@@ -13,6 +13,8 @@ data class Product(
     val description: String,
     val category: String,
     val nutritions: String,
-    val review: Int
+    val review: Int ,
+    // added to the entity
+    val favourite: Boolean = false,
 )
 

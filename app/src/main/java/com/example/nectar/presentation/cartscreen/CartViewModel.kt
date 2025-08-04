@@ -6,6 +6,10 @@ import com.example.nectar.domain.model.CartItem
 import com.example.nectar.domain.model.Product
 import com.example.nectar.domain.repository.CartItemRepository
 import com.example.nectar.domain.repository.ProductRepository
+import com.example.nectar.domain.useCases.cartusecase.DeleteCartItemUseCase
+import com.example.nectar.domain.useCases.cartusecase.GetAllCartItemsUseCase
+import com.example.nectar.domain.useCases.cartusecase.UpsertCartItemUseCase
+import com.example.nectar.domain.useCases.productusecases.GetProductByIdUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -16,8 +20,10 @@ import javax.inject.Inject
 
 @HiltViewModel
 class CartViewModel @Inject constructor(
-    private val cartItemRepository: CartItemRepository ,
-    private val productRepository: ProductRepository
+    private val getAllCartItemsUseCase: GetAllCartItemsUseCase ,
+    private val deleteCartItemUseCase: DeleteCartItemUseCase ,
+    private val upsertCartItemUseCase: UpsertCartItemUseCase ,
+    private val getProductByIdUseCase: GetProductByIdUseCase ,
 ) : ViewModel() {
 
     val _uiState = MutableStateFlow(CartUiState())
@@ -25,7 +31,7 @@ class CartViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            cartItemRepository.getAllCartItems().collect { cartItems ->
+            getAllCartItemsUseCase().collect { cartItems ->
                 _uiState.update { it.copy(cartItems = cartItems) }
                 loadCartProducts()
             }
@@ -45,9 +51,9 @@ class CartViewModel @Inject constructor(
                         quantity = newCount,
                         totalPrice = item.price * newCount
                     )
-                    cartItemRepository.insertOrUpdate(updated)
+                    upsertCartItemUseCase(updated)
                 } else {
-                    cartItemRepository.deleteCartItem(item)
+                    deleteCartItemUseCase(item)
                 }
             }
             updateUiState(_uiState.value.cartItems)
@@ -102,7 +108,7 @@ class CartViewModel @Inject constructor(
 
     fun deleteCartItem(cartItem: CartItem) {
         viewModelScope.launch {
-            cartItemRepository.deleteCartItem(cartItem)
+            deleteCartItemUseCase(cartItem)
             updateUiState(_uiState.value.cartItems)
         }
     }
@@ -126,7 +132,7 @@ class CartViewModel @Inject constructor(
             val countsMap = mutableMapOf<Int, Int>()
             for (item in _uiState.value.cartItems) {
                 try {
-                    val product = productRepository.getProductById(item.productId)
+                    val product = getProductByIdUseCase(item.productId)
                     productMap[item.productId] = product
                     countsMap[item.id] = item.quantity
                 } catch (e: Exception) {

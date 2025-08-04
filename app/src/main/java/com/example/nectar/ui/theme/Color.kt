@@ -44,6 +44,8 @@ val cancelIcon = Color(197, 197, 197)
 
 val darkerGreen = Color(72, 158, 103)
 
+val DividerColor = Color(0xFFE2E2E2)
+
 
 
 

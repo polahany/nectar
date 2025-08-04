@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.nectar.domain.model.Category
 import com.example.nectar.domain.model.Product
 import com.example.nectar.domain.repository.ProductRepository
+import com.example.nectar.domain.useCases.productusecases.GetProductsByCategoryUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -16,14 +17,14 @@ import javax.inject.Inject
 
 @HiltViewModel
 class CategoryViewModel @Inject constructor(
-    private val productRepository: ProductRepository
+    private val getProductsByCategoryUseCase: GetProductsByCategoryUseCase ,
 ): ViewModel(){
     private val _uiState = MutableStateFlow(UiCategoryState())
     val uiState: StateFlow<UiCategoryState> = _uiState.asStateFlow()
 
     fun loadPrducts(){
         viewModelScope.launch {
-            val products = productRepository.getProductsByCategory(_uiState.value.category.displayName)
+            val products = getProductsByCategoryUseCase(_uiState.value.category.displayName)
                 .collect {
                     products ->
                     _uiState.update {

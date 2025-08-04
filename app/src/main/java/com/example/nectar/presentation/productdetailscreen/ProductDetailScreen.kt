@@ -62,6 +62,7 @@ fun ProductDetailScreen(
             onReview = {} ,
             onButtonClick = viewModel::onButtonPressed ,
             onBack = onBack ,
+            onFavouriteClick = { viewModel.onFavouriteClicked(it) }
         )
     }
 }

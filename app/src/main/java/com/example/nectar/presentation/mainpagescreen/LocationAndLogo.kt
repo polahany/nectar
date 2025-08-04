@@ -27,6 +27,7 @@ fun LogoAndLocation(modifier: Modifier = Modifier) {
         modifier = Modifier
             .fillMaxWidth()
     ) {
+        Spacer(Modifier.height(24.dp))
         Image(
             painter = painterResource(R.drawable.colouredlogo) ,
             contentDescription = "coloured logo" ,

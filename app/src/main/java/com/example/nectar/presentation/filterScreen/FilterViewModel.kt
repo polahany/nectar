@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.nectar.domain.model.Category
 import com.example.nectar.domain.repository.ProductRepository
+import com.example.nectar.domain.useCases.productusecases.GetProductsByCategoryUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -15,7 +16,7 @@ import kotlinx.coroutines.launch
 
 @HiltViewModel
 class FilterViewModel @Inject constructor(
-    private val productRepository: ProductRepository ,
+    private val getProductsByCategoryUseCase: GetProductsByCategoryUseCase
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(FilterUiState())
@@ -37,7 +38,7 @@ class FilterViewModel @Inject constructor(
 
             val products = selected
                 .map { category ->
-                    productRepository.getProductsByCategory(category.displayName).first()
+                    getProductsByCategoryUseCase(category.displayName).first()
                 }
                 .flatten()
                 .distinctBy { it.id }

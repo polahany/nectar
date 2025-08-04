@@ -11,6 +11,8 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Clear
+import androidx.compose.material.icons.rounded.Check
+import androidx.compose.material.icons.rounded.Clear
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -167,13 +169,13 @@ fun TopFilterRow(
         verticalAlignment = Alignment.CenterVertically,
         modifier = modifier
             .fillMaxWidth()
-            .padding(horizontal = 24.dp)
+            .padding(horizontal = 16.dp)
     ) {
         IconButton(
             onClick = onBack
         ) {
             Icon(
-                imageVector = Icons.Default.Clear,
+                imageVector = Icons.Rounded.Clear,
                 contentDescription = "back from category",
                 modifier = Modifier
                     .size(height = 36.dp, width = 20.dp)
@@ -185,7 +187,7 @@ fun TopFilterRow(
             fontWeight = FontWeight.Bold,
             fontSize = 20.sp,
             color = mainBlack,
-            modifier = Modifier.padding(start = 100.dp)
+            modifier = Modifier.padding(start = 108.dp)
         )
     }
 }
@@ -217,7 +219,7 @@ fun FilterCheckbox(
         ) {
             if (isChecked) {
                 Icon(
-                    imageVector = Icons.Default.Check,
+                    imageVector = Icons.Rounded.Check,
                     contentDescription = "checked",
                     tint = Color.White,
                     modifier = Modifier.size(16.dp)
