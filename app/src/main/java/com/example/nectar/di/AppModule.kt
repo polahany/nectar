@@ -5,6 +5,7 @@ import androidx.room.Room
 import com.example.nectar.data.dao.CartDao
 import com.example.nectar.data.dao.ProductDao
 import com.example.nectar.data.database.AppDatabase
+import com.example.nectar.data.database.MIGRATION_3_4
 import com.example.nectar.data.repository.CartItemRepositoryImpl
 import com.example.nectar.data.repository.ProductRepositoryImpl
 import com.example.nectar.domain.repository.CartItemRepository
@@ -26,7 +27,7 @@ object AppModule {
             AppDatabase::class.java,
             "nectar_db"
         )
-            .fallbackToDestructiveMigration()
+            .addMigrations(MIGRATION_3_4)
             .build()
     }
     @Provides

@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.filled.Tune
+import androidx.compose.material.icons.rounded.KeyboardArrowLeft
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
@@ -96,7 +97,7 @@ fun TopCategoryScreenBar(
             onClick = onBack
         ) {
             Icon(
-                imageVector = Icons.Default.KeyboardArrowLeft ,
+                imageVector = Icons.Rounded.KeyboardArrowLeft ,
                 contentDescription = "back from category" ,
                 modifier = Modifier
                     .size(height = 36.dp , width = 20.dp)

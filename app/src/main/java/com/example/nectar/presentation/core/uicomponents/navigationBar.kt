@@ -90,7 +90,7 @@ fun NavigationIcon(
         contentDescription = null,
         tint = if (isSelected) mainGreen else mainBlack,
         modifier = modifier
-            .size(32.dp)
+            .size(36.dp)
             .clickable { onClick() }
     )
 }

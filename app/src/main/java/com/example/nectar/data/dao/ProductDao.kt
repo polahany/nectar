@@ -24,4 +24,10 @@ interface ProductDao {
     @Query("SELECT * FROM products WHERE LOWER(category) = LOWER(:category)")
     fun getProductsByCategory(category: String): Flow<List<Product>>
 
+    @Query("UPDATE products SET favourite = NOT favourite WHERE id = :productId")
+    suspend fun toggleFavourite(productId: Int)
+
+    @Query("SELECT favourite FROM products WHERE id = :productId")
+    suspend fun getFavouriteStatus(productId: Int): Boolean
+
 }

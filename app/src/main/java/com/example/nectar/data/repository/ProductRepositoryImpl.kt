@@ -27,4 +27,10 @@ class ProductRepositoryImpl (
     override fun getProductsByCategory(category: String): Flow<List<Product>> {
         return productDao.getProductsByCategory(category)
     }
+
+    override suspend fun toggleAndReturnFavourite(productId: Int): Boolean {
+        productDao.toggleFavourite(productId)
+        return productDao.getFavouriteStatus(productId)
+    }
+
 }

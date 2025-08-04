@@ -13,7 +13,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-@Database(entities = [CartItem::class, Product::class], version = 3)
+@Database(entities = [CartItem::class, Product::class], version = 4)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun productDao(): ProductDao
 

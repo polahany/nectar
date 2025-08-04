@@ -4,9 +4,11 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.nectar.domain.model.CartItem
-import com.example.nectar.domain.model.Product
-import com.example.nectar.domain.repository.CartItemRepository
-import com.example.nectar.domain.repository.ProductRepository
+import com.example.nectar.domain.useCases.cartusecase.DeleteCartItemUseCase
+import com.example.nectar.domain.useCases.cartusecase.GetCartItemByProductIdUseCase
+import com.example.nectar.domain.useCases.cartusecase.UpsertCartItemUseCase
+import com.example.nectar.domain.useCases.productusecases.GetProductByIdUseCase
+import com.example.nectar.domain.useCases.productusecases.ToggleFavouriteUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -17,8 +19,11 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ProductDetailViewModel @Inject constructor(
-    private val cartItemRepository: CartItemRepository ,
-    private val productRepository: ProductRepository ,
+    private val getProductByIdUseCase: GetProductByIdUseCase ,
+    private val getCartItemByProductIdUseCase: GetCartItemByProductIdUseCase ,
+    private val deleteCartItemUseCase: DeleteCartItemUseCase ,
+    private val upsertCartItemUseCase: UpsertCartItemUseCase ,
+    private val toggleFavouriteUseCase: ToggleFavouriteUseCase ,
     savedStateHandle: SavedStateHandle
 ) : ViewModel(){
 
@@ -34,13 +39,14 @@ class ProductDetailViewModel @Inject constructor(
     private fun initializeState(productId: Int) {
         viewModelScope.launch {
             try {
-                val product = productRepository.getProductById(productId)
-                val cartItem = cartItemRepository.getItemByProductId(productId)
+                val product = getProductByIdUseCase(productId)
+                val cartItem = getCartItemByProductIdUseCase(productId)
 
                 _uiState.update {
                     it.copy(
                         product = product,
-                        currentCart = cartItem?.quantity ?: 0
+                        currentCart = cartItem?.quantity ?: 0 ,
+                        favaourite = product.favourite
                     )
                 }
             } catch (e: Exception) {
@@ -62,8 +68,8 @@ class ProductDetailViewModel @Inject constructor(
 
         viewModelScope.launch {
             if (quantity == 0) {
-                cartItemRepository.getItemByProductId(product.id)?.let {
-                    cartItemRepository.deleteCartItem(it)
+                getCartItemByProductIdUseCase(product.id)?.let {
+                    deleteCartItemUseCase(it)
                 }
             } else {
                 val total = quantity * product.price
@@ -73,7 +79,7 @@ class ProductDetailViewModel @Inject constructor(
                     price = product.price,
                     totalPrice = total
                 )
-                cartItemRepository.insertOrUpdate(cartItem)
+                upsertCartItemUseCase(cartItem)
             }
         }
     }
@@ -81,7 +87,7 @@ class ProductDetailViewModel @Inject constructor(
     fun setProduct(productId: Int) {
         viewModelScope.launch {
             try {
-                val product = productRepository.getProductById(productId)
+                val product = getProductByIdUseCase(productId)
                 _uiState.update {
                     it.copy(
                         product = product,
@@ -92,4 +98,10 @@ class ProductDetailViewModel @Inject constructor(
         }
     }
 
+    fun onFavouriteClicked(productId: Int) {
+        viewModelScope.launch {
+            val newFavourite = toggleFavouriteUseCase(productId)
+            _uiState.update { it.copy(favaourite = newFavourite) }
+        }
+    }
 }

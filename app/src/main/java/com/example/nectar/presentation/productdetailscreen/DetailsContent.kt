@@ -15,6 +15,8 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.filled.Remove
 import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material3.Card
@@ -54,6 +56,7 @@ fun DetailsContent(
     onReview: () -> Unit,
     onButtonClick: () -> Unit,
     onBack: () -> Unit,
+    onFavouriteClick: (Int) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -71,7 +74,11 @@ fun DetailsContent(
             ) {
                 Spacer(Modifier.height(8.dp))
 
-                NameAndDetailsRow(product = product)
+                NameAndDetailsRow(
+                    product = product ,
+                    onFavouriteClick = onFavouriteClick ,
+                    state = state ,
+                )
 
                 Spacer(Modifier.height(32.dp))
 
@@ -218,6 +225,8 @@ fun CartButtons(
 @Composable
 fun NameAndDetailsRow(
     product: Product ,
+    state: productDetailUiState ,
+    onFavouriteClick: (Int) -> Unit ,
     modifier: Modifier = Modifier
 ) {
     Row (
@@ -235,11 +244,16 @@ fun NameAndDetailsRow(
 
         Spacer(Modifier.weight(1f))
 
-        Icon(
-            imageVector = Icons.Outlined.FavoriteBorder ,
-            contentDescription = "add to favpurite" ,
-            tint = secondaryText ,
-        )
+        IconButton(
+            onClick = { onFavouriteClick(product.id) }
+        ) {
+            Icon(
+                imageVector = if(state.favaourite) Icons.Filled.Favorite else Icons.Outlined.FavoriteBorder ,
+                contentDescription = "add to favpurite" ,
+                tint = if(state.favaourite) mainGreen else secondaryText ,
+            )
+        }
+
 
     }
     Spacer(Modifier.height(12.dp))
@@ -268,7 +282,8 @@ fun DetailsContentPreview() {
             onReview = {},
             onButtonClick = {} ,
             state = productDetailUiState() ,
-            onBack = {}
+            onBack = {} ,
+            onFavouriteClick = {}
         )
     }
 }

@@ -2,6 +2,7 @@ package com.example.nectar.presentation.cartscreen
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -13,6 +14,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.outlined.FavoriteBorder
+import androidx.compose.material.icons.rounded.Clear
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -22,6 +24,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
@@ -29,6 +32,7 @@ import coil.request.ImageRequest
 import com.example.nectar.domain.model.CartItem
 import com.example.nectar.domain.model.Product
 import com.example.nectar.presentation.productdetailscreen.NameAndDetailsRow
+import com.example.nectar.ui.theme.DividerColor
 import com.example.nectar.ui.theme.Typography
 import com.example.nectar.ui.theme.mainBlack
 import com.example.nectar.ui.theme.secondaryText
@@ -48,11 +52,9 @@ fun CartCard(
     ) {
         Divider(
             thickness = 1.dp,
-            color = secondaryText,
+            color = DividerColor,
             modifier = Modifier.fillMaxWidth()
         )
-
-        Spacer(Modifier.height(8.dp))
 
         Row(
             horizontalArrangement = Arrangement.SpaceBetween,
@@ -61,8 +63,6 @@ fun CartCard(
                 .fillMaxWidth()
                 .padding(24.dp)
         ) {
-
-
             AsyncImage(
                 model = ImageRequest.Builder(LocalContext.current)
                     .data(product.image_url)
@@ -83,6 +83,8 @@ fun CartCard(
                     onDelete = onDelete ,
                     product = product
                 )
+
+                Spacer(Modifier.height(8.dp))
 
                 CartItemsButtonsAndPriceRow(
                     state = uiState ,
@@ -105,17 +107,30 @@ fun CartItemNameAndDetailsRow(
     modifier: Modifier = Modifier
 ) {
     Row (
-        verticalAlignment = Alignment.CenterVertically ,
         modifier = Modifier
             .fillMaxWidth()
+            .padding(start = 32.dp)
     ){
-        Text(
-            text = product.name ,
-            style = Typography.displayMedium ,
-            lineHeight = 18.sp ,
-            letterSpacing = 0.1.sp ,
-            color = mainBlack ,
-        )
+        Column {
+            Text(
+                text = product.name ,
+                style = Typography.displayMedium ,
+                fontSize = 16.sp,
+                lineHeight = 18.sp ,
+                letterSpacing = 0.1.sp ,
+                fontWeight = FontWeight.Bold,
+                color = mainBlack ,
+            )
+            Spacer(Modifier.height(8.dp))
+            Text(
+                text = product.detail ,
+                style = Typography.bodyLarge ,
+                lineHeight = 18.sp ,
+                fontSize = 14.sp ,
+                color = secondaryText ,
+            )
+        }
+
 
         Spacer(Modifier.weight(1f))
 
@@ -123,21 +138,13 @@ fun CartItemNameAndDetailsRow(
             onClick = { onDelete(item) }
         ) {
             Icon(
-                imageVector = Icons.Default.Clear ,
+                imageVector = Icons.Rounded.Clear ,
                 contentDescription = "delete" ,
                 tint = secondaryText ,
             )
         }
 
     }
-    Spacer(Modifier.height(12.dp))
-    Text(
-        text = product.detail ,
-        style = Typography.bodyLarge ,
-        lineHeight = 18.sp ,
-        fontSize = 16.sp ,
-        color = secondaryText ,
-    )
 }
 
 

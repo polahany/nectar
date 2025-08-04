@@ -4,10 +4,12 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.Divider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -22,6 +24,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.nectar.core.uicomponents.MainButton
 import com.example.nectar.presentation.navigation.NavigationDestination
+import com.example.nectar.ui.theme.DividerColor
 import com.example.nectar.ui.theme.Typography
 import com.example.nectar.ui.theme.mainBlack
 
@@ -44,17 +47,23 @@ fun CartScreen(
         modifier = Modifier
             .fillMaxSize()
             .background(Color.White)
-            .padding(24.dp)
     ) {
-        Spacer(Modifier.height(32.dp))
-        Text(
-            text = "My Cart" ,
-            style = Typography.displaySmall ,
-            fontWeight = FontWeight.Bold ,
-            fontSize = 20.sp ,
-            color = mainBlack ,
-        )
-        Spacer(Modifier.height(28.dp))
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 24.dp)
+        ) {
+            Spacer(Modifier.height(56.dp))
+            Text(
+                text = "My Cart" ,
+                style = Typography.displaySmall ,
+                fontWeight = FontWeight.Bold ,
+                fontSize = 20.sp ,
+                color = mainBlack ,
+            )
+            Spacer(Modifier.height(28.dp))
+        }
         LazyColumn(
             modifier = Modifier
                 .weight(1f)
@@ -70,6 +79,13 @@ fun CartScreen(
                         onIncrement = { viewModel.incrementItemCount(item) } ,
                         onDecrement = { viewModel.decrementItemCount(item) } ,
                         onDelete = { viewModel.deleteCartItem(item) }
+                    )
+                }
+                this@LazyColumn.item{
+                    Divider(
+                        thickness = 1.dp,
+                        color = DividerColor,
+                        modifier = Modifier.fillMaxWidth()
                     )
                 }
             }
