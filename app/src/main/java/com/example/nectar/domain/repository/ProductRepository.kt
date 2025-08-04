@@ -16,4 +16,6 @@ interface ProductRepository {
 
     suspend fun toggleAndReturnFavourite(productId: Int): Boolean
 
+    fun getFavourites(): Flow<List<Product>>
+
 }

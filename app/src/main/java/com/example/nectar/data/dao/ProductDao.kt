@@ -30,4 +30,7 @@ interface ProductDao {
     @Query("SELECT favourite FROM products WHERE id = :productId")
     suspend fun getFavouriteStatus(productId: Int): Boolean
 
+    @Query("SELECT * FROM products WHERE favourite = 1")
+    fun getFavourites(): Flow<List<Product>>
+
 }

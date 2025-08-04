@@ -7,6 +7,7 @@ import com.example.nectar.data.database.prepopulateData
 import com.example.nectar.domain.model.Category
 import com.example.nectar.domain.model.Product
 import com.example.nectar.domain.repository.ProductRepository
+import com.example.nectar.domain.useCases.productusecases.GetAllFavouritesUseCase
 import com.example.nectar.domain.useCases.productusecases.GetAllProductsUseCase
 import com.example.nectar.domain.useCases.productusecases.GetProductsByCategoryUseCase
 import com.example.nectar.domain.useCases.productusecases.prepopulateDataBaseUseCase
@@ -25,7 +26,8 @@ import javax.inject.Inject
 class MainPageViewModel @Inject constructor(
     private val getAllProductsUseCase: GetAllProductsUseCase ,
     private val prepopulateDataBaseUseCase: prepopulateDataBaseUseCase ,
-    private val getProductsByCategoryUseCase: GetProductsByCategoryUseCase
+    private val getProductsByCategoryUseCase: GetProductsByCategoryUseCase ,
+    private val getFavouriteProductsUseCase: GetAllFavouritesUseCase
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(UiMainState())
@@ -40,6 +42,7 @@ class MainPageViewModel @Inject constructor(
         }
         loadCategories()
         loadExclusiveOrders()
+        loadFavourites()
         loadProductsByCategories()
     }
 
@@ -74,4 +77,15 @@ class MainPageViewModel @Inject constructor(
             }
         }
     }
+
+    private fun loadFavourites() {
+        viewModelScope.launch {
+            getFavouriteProductsUseCase().collect { favourites ->
+                _uiState.update {
+                    it.copy(favouriteList = favourites)
+                }
+            }
+        }
+    }
+
 }

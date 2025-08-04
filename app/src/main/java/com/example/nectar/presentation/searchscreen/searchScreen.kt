@@ -68,7 +68,8 @@ fun SearchScreen(
                     onCancel = {
                         viewModel.clearSearchResults()
                         onCancel()
-                    }
+                    } ,
+                    isSearching = true ,
                 )
             }
             IconButton(

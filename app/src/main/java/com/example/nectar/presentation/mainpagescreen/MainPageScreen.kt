@@ -101,6 +101,19 @@ fun MainPageContent(
                     onCategoryClick = onCategoryClick ,
                 )
             }
+
+            item {
+                if(uiMainState.favouriteList.isNotEmpty()){
+                    ProductsList(
+                        name = "Favourites" ,
+                        type = "favourites" ,
+                        items = uiMainState.favouriteList ,
+                        onCardClick = onCardClick ,
+                        onClick = {}
+                    )
+                }
+            }
+
             items(uiMainState.productsList) { list ->
                 if (list.isNotEmpty()) {
                     ProductsList(

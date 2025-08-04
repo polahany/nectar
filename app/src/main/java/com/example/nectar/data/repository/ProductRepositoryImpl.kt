@@ -33,4 +33,7 @@ class ProductRepositoryImpl (
         return productDao.getFavouriteStatus(productId)
     }
 
+    override fun getFavourites(): Flow<List<Product>> {
+        return productDao.getFavourites()
+    }
 }
