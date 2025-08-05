@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">nectar</string>
+    <string name="welcome_to_our_store">Welcome\nto our store</string>
+    <string name="get_your_groceries_in_as_fast_as_one_hour">Get your groceries in as fast as one hour</string>
+    <string name="dhaka_banassre">Dhaka, Banassre</string>
+    <string name="your_order_has_been_accepted">Your Order has been\naccepted</string>
+    <string name="your_items_has_been_placcd_and_is_on_it_s_way_to_being_processed">Your items has been placcd and is on \nit’s way to being processed</string>
 </resources>

@@ -1,0 +1,91 @@
+package com.example.nectar.presentation.mainpagescreen
+
+import android.util.Log
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.nectar.data.database.prepopulateData
+import com.example.nectar.domain.model.Category
+import com.example.nectar.domain.model.Product
+import com.example.nectar.domain.repository.ProductRepository
+import com.example.nectar.domain.useCases.productusecases.GetAllFavouritesUseCase
+import com.example.nectar.domain.useCases.productusecases.GetAllProductsUseCase
+import com.example.nectar.domain.useCases.productusecases.GetProductsByCategoryUseCase
+import com.example.nectar.domain.useCases.productusecases.prepopulateDataBaseUseCase
+import com.example.nectar.presentation.mainpagescreen.UiMainState
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
+import javax.inject.Inject
+
+@HiltViewModel
+class MainPageViewModel @Inject constructor(
+    private val getAllProductsUseCase: GetAllProductsUseCase ,
+    private val prepopulateDataBaseUseCase: prepopulateDataBaseUseCase ,
+    private val getProductsByCategoryUseCase: GetProductsByCategoryUseCase ,
+    private val getFavouriteProductsUseCase: GetAllFavouritesUseCase
+) : ViewModel() {
+
+    private val _uiState = MutableStateFlow(UiMainState())
+    val uiState: StateFlow<UiMainState> = _uiState.asStateFlow()
+
+    init {
+        viewModelScope.launch {
+            val products = getAllProductsUseCase().first()
+            if (products.isEmpty()) {
+                prepopulateDataBaseUseCase(prepopulateData())
+            }
+        }
+        loadCategories()
+        loadExclusiveOrders()
+        loadFavourites()
+        loadProductsByCategories()
+    }
+
+    private fun loadCategories() {
+        _uiState.update {
+            it.copy(categoriesList = Category.values().toList())
+        }
+    }
+
+    private fun loadExclusiveOrders() {
+        viewModelScope.launch {
+            getAllProductsUseCase().collect { products ->
+                _uiState.update {
+                    it.copy(exclusiveOrdersList = products)
+                }
+            }
+        }
+    }
+
+    private fun loadProductsByCategories() {
+        viewModelScope.launch {
+            val categoryFlows = Category.values().map { category ->
+                getProductsByCategoryUseCase(category.displayName)
+            }
+
+            combine(categoryFlows) { productLists ->
+                productLists.toList()
+            }.collect { combinedProducts ->
+                _uiState.update {
+                    it.copy(productsList = combinedProducts)
+                }
+            }
+        }
+    }
+
+    private fun loadFavourites() {
+        viewModelScope.launch {
+            getFavouriteProductsUseCase().collect { favourites ->
+                _uiState.update {
+                    it.copy(favouriteList = favourites)
+                }
+            }
+        }
+    }
+
+}
